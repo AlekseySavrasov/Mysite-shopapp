@@ -1,0 +1,43 @@
+{% extends 'shopapp/base.html' %}
+{% load cache %}
+
+{% block title%}
+    Shop Index
+{% endblock %}
+
+{% block body%}
+<h1>Hello Shop Index</h1>
+
+<div>
+    <ul>
+        {% for name, price in products%}
+            <li>{{ name }} for ${{ price }}</li>
+            {% if name|length_is:'7'%}
+            <span>Lucky index</span>
+            {% endif %}
+            {% if name|length_is:'6' %}
+                <span>not Lucky product</span>
+            {% endif %}
+            {% if name|length_is:'10' %}
+                <span>so long product</span>
+            {% endif %}
+        {% empty %}
+            No products
+        {% endfor %}
+    </ul>
+</div>
+<div>
+<strong>
+    You have {{ items }} item{{ items|pluralize }}
+</strong>
+</div>
+<div>
+    Time running: {{ timer_running }}
+</div>
+
+{% cache 100 lorem products %}
+<div>
+    {% lorem 3 p random %}
+</div>
+{% endcache %}
+{% endblock %}

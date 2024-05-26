@@ -1,0 +1,19 @@
+{% extends 'shopapp/base.html' %}
+{% load cache %}
+
+{% block title%}
+    Shop Index
+{% endblock %}
+
+{% block body%}
+  {% if orders %}
+    <h1>Пользователь {{ owner.username }} выполнил следующие заказы</h1>
+      {% cache 60 user_orders owner.pk %}
+      {% for order in orders %}
+        <li>Order #{{ order.id }}: {{ order.delivery_address }} - {{ order.created_at }}</li>
+      {% endfor %}
+      {% endcache %}
+  {% else %}
+      <h1>У пользователя {{ owner.username }} ещё нет заказов</h1>
+  {% endif %}
+{% endblock %}

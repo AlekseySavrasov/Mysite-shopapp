@@ -1,0 +1,35 @@
+{% extends 'myauth/base.html' %}
+
+{% block title %}
+    View profile
+{% endblock %}
+
+{% block body %}
+    <h1>View profile</h1>
+    {% if profile %}
+    <div>
+        <h2>Details</h2>
+        <p>
+            {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="{{ profile.avatar.name }}">
+            {% else %}
+                <div>No avatar uploaded yet</div>
+            {% endif %}
+        </p>
+        <p>Bio: {{ profile.bio }}</p>
+    </div>
+<br>
+    <div>
+        {% if perms.myauth.UserUpdateView %}
+            <a href="{% url 'myauth:profile_update' pk=profile.pk %}">Update profile</a>
+        {% endif %}
+    </div>
+<br>
+    <div>
+        <a href="{% url 'myauth:users_list' %}">Back to users list</a>
+    </div>
+    {% else %}
+        <div>No profile created yet</div>
+    {% endif %}
+
+{% endblock %}
